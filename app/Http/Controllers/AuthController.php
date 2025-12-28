@@ -41,4 +41,35 @@ class AuthController extends ApiController
             'token_type' => 'Bearer'
         ], 'Login successful');
     }
+
+public function getById(Request $request, $id)
+{
+    $currentUser = $request->user();
+    
+    if (!$currentUser) {
+        return $this->errorResponse('User not authenticated', 401); // Changed to 401
+    }
+
+    $user = User::find($id);
+    
+    // Check if user exists
+    if (!$user) {
+        return $this->errorResponse('User not found', 404);
+    }
+
+    // Optional: Authorization check (user can only view own profile unless admin)
+    if ($currentUser->id != $user->id && $currentUser->role !== 'admin') {
+        return $this->errorResponse('Forbidden: You can only view your own profile', 403);
+    }
+
+    return $this->successResponse([
+        'user' => [
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'role' => $user->role
+        ],
+    ], 'Successfully retrieved by id', 200);
+}
+
 }
