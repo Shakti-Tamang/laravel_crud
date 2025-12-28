@@ -1,0 +1,7 @@
+POST http://localhost:8000/api/categories
+Content-Type: application/json
+{
+    "name": "Electronics",
+    "description": "Electronic devices category",
+    "price": "999.99"
+}
