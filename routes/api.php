@@ -28,6 +28,13 @@ Route::post('/test-post', function(Request $request) {
 
 Route::post('/login',[AuthController::class,'login'])->name('login');
 
+Route::get('/user/{id}', [AuthController::class, 'getById'])
+    ->middleware('auth:sanctum')
+    ->name('user.getById');
+
 Route::get('/user', function(Request $request) {
 return $request->user();
 })->middleware('auth:sanctum',AdminMiddleWare::class);
+
+
+// The primary ORM (Object-Relational Mapper) for Laravel is Eloquent. It provides an elegant, ActiveRecord implementation for interacting with your database using object-oriented PHP syntax instead of writing raw SQL queries. 
