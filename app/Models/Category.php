@@ -19,6 +19,11 @@ class Category extends Model
         'price' // Stored as string as per your migration
     ];
 
+
+    public function  prodct()
+    {
+        return $this->hasMany(ProductModel::class);
+    }
     // No casting for price since it's a string field
     // This means price will be treated as plain text
 }
